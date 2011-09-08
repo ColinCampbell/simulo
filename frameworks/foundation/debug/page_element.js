@@ -3,15 +3,30 @@ sc_require('debug/keyboard_string');
 
 Simulo.PageElement = SC.Object.extend({
   init: function() {
-    if(this.get('element') == undefined) {
-      if(this.get('selector') == undefined)
-        throw new Error('ERROR: PageElement expected a selector, but none was given');
-      var element = SC.CoreQuery(this.get('selector'));
-      if(element.length == 0)
-        throw new Error('ERROR: Could not find ' + this.get('selector') + ' on the page');
-      if(element.length > 1) 
-        throw new Error('ERROR: Page has multiple elements that match ' + this.get('selector'));
+    sc_super();
+
+    var element = this.get('element');
+
+    if (element === undefined) {
+      if (this.get('selector') === undefined) {
+        throw new Error('ERROR: PageElement expected an element or a selector, but none was given');
+      }
+
+      element = SC.CoreQuery(this.get('selector'));
       this.set('element', element);
+    }
+
+    if (element instanceof HTMLElement) {
+      element = $(element);
+      this.set('element', element);
+    }
+
+    if (element.length === 0) {
+      throw new Error('ERROR: Could not find ' + this.get('selector') + ' on the page');
+    }
+
+    if (element.length > 1) {
+      throw new Error('ERROR: Page has multiple elements that match ' + this.get('selector'));
     }
   },
 

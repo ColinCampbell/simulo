@@ -1,6 +1,12 @@
 var Simulo = {
   clickOn: function(selector) {
-    var pageElement = Simulo.PageElement.create({selector: selector});
+    var pageElement;
+    if (typeof selector === 'string') {
+      pageElement = Simulo.PageElement.create({selector: selector});
+    } else {
+      pageElement = Simulo.PageElement.create({element: selector});
+    }
+
     SC.RunLoop.begin();
     waits(1);
     runs(function() {
@@ -12,6 +18,7 @@ var Simulo = {
 
   pressEnter: function(selector) {
     var pageElement = this._pageElement ? this._pageElement : Simulo.PageElement.create({selector: selector});
+
     SC.RunLoop.begin();
     waits(1);
     runs(function() {
@@ -22,8 +29,14 @@ var Simulo = {
   },
 
   fillIn: function(selector, value) {
-    var pageElement = Simulo.PageElement.create({selector: selector});
+    var pageElement;
+    if (typeof selector === 'string') {
+      pageElement = Simulo.PageElement.create({selector: selector});
+    } else {
+      pageElement = Simulo.PageElement.create({element: selector});
+    }
     this._pageElement = pageElement;
+
     SC.RunLoop.begin();
     waits(1);
     runs(function() {
