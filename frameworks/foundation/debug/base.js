@@ -46,5 +46,41 @@ var Simulo = {
     SC.RunLoop.end();
 
     return this;
+  },
+
+  select: function(selector, value) {
+    var pageElement;
+    if (typeof selector === 'string') {
+      pageElement = Simulo.PageElement.create({selector: selector});
+    } else {
+      pageElement = Simulo.PageElement.create({element: selector});
+    }
+
+    SC.RunLoop.begin();
+    waits(1);
+    runs(function() {
+      pageElement.select(value);
+    });
+    SC.RunLoop.end();
+
+    return this;
+  },
+
+  check: function(selector, value) {
+    var pageElement;
+    if (typeof selector === 'string') {
+      pageElement = Simulo.PageElement.create({selector: selector});
+    } else {
+      pageElement = Simulo.PageElement.create({element: selector});
+    }
+
+    waits(1);
+    runs(function() {
+      SC.RunLoop.begin();
+      pageElement.check(value);
+      SC.RunLoop.end();
+    });
+
+    return this;
   }
 };

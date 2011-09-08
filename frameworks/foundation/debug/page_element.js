@@ -47,5 +47,18 @@ Simulo.PageElement = SC.Object.extend({
   pressEnter: function() {
     Simulo.KeyboardEvent.create({commandKey: 'enter', target: this.get('element')}).trigger();
     return this;
+  },
+
+  select: function(item) {
+    this.get('element').val(item);
+    this.get('element').trigger('change');
+    return this;
+  },
+
+  check: function(item) {
+    this.get('element').attr('checked', 'checked');
+    this.get('element').trigger('change');
+    return this;
   }
+
 });
